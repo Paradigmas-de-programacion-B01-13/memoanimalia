@@ -86,7 +86,7 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
 
         showWelcomeMessage();
 
-        // Mostrar todas las cartas por 2 segundos al inicio
+        // Mostrar todas las cartas por 3 segundos al inicio
         showAllCardsTemporarily();
     }
 
@@ -232,7 +232,7 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
                 + "REGLAS DEL JUEGO:\n\n"
                 + "• Encuentra todas las parejas de animales haciendo clic en las cartas.\n"
                 + "• Tienes un máximo de " + engine.getAttemptLimit() + " intentos para encontrar todas las parejas.\n"
-                + "• Las cartas se mostrarán por 2 segundos al inicio del juego.\n"
+                + "• Las cartas se mostrarán por 3 segundos al inicio del juego.\n"
                 + "• Si dos cartas no coinciden, se ocultarán automáticamente.\n"
                 + "• Si dos cartas coinciden, permanecerán visibles.\n\n"
                 + "¡Buena suerte!";
@@ -246,7 +246,7 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
     }
 
     /**
-     * Muestra todas las cartas temporalmente por 2 segundos al inicio del juego
+     * Muestra todas las cartas temporalmente por 3 segundos al inicio del juego
      */
     private void showAllCardsTemporarily() {
         // Revelar todas las cartas visualmente (sin modificar el estado del motor)
@@ -268,7 +268,7 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
         }
 
         // Inicializar contador de tiempo
-        remainingSeconds = INITIAL_REVEAL_TIME_MS / COUNTDOWN_INTERVAL_MS; // 2 segundos
+        remainingSeconds = INITIAL_REVEAL_TIME_MS / COUNTDOWN_INTERVAL_MS; // 3 segundos
         updateCountdownDisplay();
 
         // Crear timer para actualizar el contador cada segundo
@@ -282,7 +282,7 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
         });
         countdownTimer.start();
 
-        // Crear timer para ocultar todas las cartas después de 2 segundos
+        // Crear timer para ocultar todas las cartas después de 3 segundos
         initialRevealTimer = new Timer(INITIAL_REVEAL_TIME_MS, e -> {
             // Detener el contador
             if (countdownTimer != null) {
@@ -469,7 +469,7 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
             statusLabel.setForeground(new Color(0, 100, 0));
             resetIndexes();
 
-            // Mostrar todas las cartas por 2 segundos nuevamente
+            // Mostrar todas las cartas por 3 segundos nuevamente
             showAllCardsTemporarily();
         });
     }

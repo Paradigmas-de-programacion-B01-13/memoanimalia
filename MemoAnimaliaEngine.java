@@ -259,7 +259,7 @@ public class MemoAnimaliaEngine {
                 if (isGameWon() && listener != null) 
                     listener.onGameWon(attempts);
 
-                if (attempts > attemptLimit && listener != null) {
+                if (attempts >= attemptLimit && listener != null) {
                     listener.onGameOverAttemptLimit(attemptLimit);
                     resetForNewGame();
                 }
@@ -270,7 +270,7 @@ public class MemoAnimaliaEngine {
                 if (listener != null) listener.onCardsHidden(firstSelectedIndex, secondIndex);
                 firstSelectedIndex = null;
 
-                if (attempts > attemptLimit && listener != null) {
+                if (attempts >= attemptLimit && listener != null) {
                     listener.onGameOverAttemptLimit(attemptLimit);
                     resetForNewGame();
                 }

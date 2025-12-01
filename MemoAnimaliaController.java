@@ -27,6 +27,7 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
     private int firstCardIndex = -1;
     private int secondCardIndex = -1;
     private int remainingSeconds;
+    private boolean gameOverDialogOpen = false;
 
     private static final int CARD_SIZE = 120;
     private static final int GRID_PADDING = 10;
@@ -428,8 +429,11 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
      */
     @Override
     public void onGameOverAttemptLimit(int attemptLimit) {
+
+        gameOverDialogOpen = true;
+
         SwingUtilities.invokeLater(() -> {
-            statusLabel.setText("Límite de intentos alcanzado. Reiniciando...");
+            statusLabel.setText("Límite de intentos alcanzado.");
             statusLabel.setForeground(Color.RED);
 
             String message = String.format(GAME_LOST_MESSAGE, attemptLimit);
@@ -440,7 +444,37 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
                     "Fin del Juego",
                     JOptionPane.WARNING_MESSAGE
             );
+
+            gameOverDialogOpen = false;
+
+            executeGameReset();
         });
+    }
+
+    /**
+     * Ejecuta el reinicio del juego.
+     */
+    private void executeGameReset() {
+        if (initialRevealTimer != null) {
+            initialRevealTimer.stop();
+            initialRevealTimer = null;
+        }
+        if (countdownTimer != null) {
+            countdownTimer.stop();
+            countdownTimer = null;
+        }
+        hideTimer.stop();
+
+        updateAllCards();
+        attemptsLabel.setText("Intentos: 0 / " + engine.getAttemptLimit());
+        attemptsLabel.setForeground(Color.BLACK);
+        matchesLabel.setText("Parejas: 0");
+        statusLabel.setText("¡Encuentra las parejas!");
+        statusLabel.setForeground(new Color(0, 100, 0));
+        resetIndexes();
+
+        // Mostrar todas las cartas por 3 segundos nuevamente
+        showAllCardsTemporarily();
     }
 
     /**
@@ -450,6 +484,12 @@ public class MemoAnimaliaController extends JPanel implements MemoAnimaliaEngine
     @Override
     public void onGameReset() {
         SwingUtilities.invokeLater(() -> {
+            // Si estamos esperando que el usuario cierre el diálogo de fin de juego,
+            // no reiniciar todavía
+            if (gameOverDialogOpen) {
+                return;
+            }
+
             // Detener cualquier timer activo
             if (initialRevealTimer != null) {
                 initialRevealTimer.stop();

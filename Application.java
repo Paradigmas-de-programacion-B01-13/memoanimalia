@@ -15,7 +15,7 @@ public class Application extends JFrame {
         setResizable(false);
 
         // Lista de animales basada en las imágenes disponibles
-        List<String> animalIds = Arrays.asList("abeja", "gato", "leon", "pato", "pez", "tigre", "zorro");
+        List<String> animalIds = Arrays.asList("abeja", "gato", "elefante", "tigre", "mono", "pajaro", "vaca", "caballo", "conejo");
 
         // Crear el panel principal del juego
         MemoAnimaliaController gamePanel = new MemoAnimaliaController(animalIds);
